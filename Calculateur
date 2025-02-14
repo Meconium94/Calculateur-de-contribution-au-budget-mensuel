@@ -1,0 +1,67 @@
+def calculer_contributions_patrimoine_egalitaire():
+    """
+    Calcule les contributions de chaque partenaire de manière à ce que
+    chacun contribue à hauteur du MÊME pourcentage de son patrimoine.
+    """
+
+    print("Bienvenue dans le calculateur de contributions (égalité proportionnelle du patrimoine)!\n")
+
+    # Saisie des données (simplifiée - on n'a besoin que des patrimoines et des dépenses)
+
+    while True:
+        try:
+            p1 = float(input("Entrez le patrimoine total du partenaire 1 (en euros): "))
+            p2 = float(input("Entrez le patrimoine total du partenaire 2 (en euros): "))
+            if p1 < 0 or p2 < 0:
+                print("Les patrimoines ne peuvent pas être négatifs. Veuillez réessayer.")
+            else:
+                break
+        except ValueError:
+            print("Erreur: Veuillez entrer des nombres valides pour les patrimoines.")
+
+    while True:
+        try:
+            d = float(input("Entrez les dépenses mensuelles totales du compte commun (en euros): "))
+            if d < 0:
+                print("Les dépenses ne peuvent pas être négatives. Veuillez réessayer.")
+            else:
+                break
+        except ValueError:
+            print("Erreur: Veuillez entrer un nombre valide pour les dépenses.")
+
+
+    # --- Calcul du Pourcentage Cible (Clé de l'algorithme) ---
+    patrimoine_total = p1 + p2
+
+    if patrimoine_total == 0:
+        pourcentage_cible = 0  # Évite une division par zéro si les deux patrimoines sont nuls
+    else:
+        pourcentage_cible = (d / patrimoine_total) * 100  # Pourcentage du patrimoine total
+
+
+    # --- Calcul des Contributions Individuelles ---
+
+    c1 = (pourcentage_cible / 100) * p1  # Application du pourcentage au patrimoine de chacun
+    c2 = (pourcentage_cible / 100) * p2
+
+
+    # --- Affichage des Résultats ---
+
+    print("\n--- Résultats ---")
+    print(f"Partenaire 1:")
+    print(f"  Patrimoine: {p1:.2f} €")
+    print(f"  Pourcentage de contribution (par rapport au patrimoine): {pourcentage_cible:.2f}%") # Même pourcentage
+    print(f"  Contribution mensuelle: {c1:.2f} €")
+
+    print(f"\nPartenaire 2:")
+    print(f"  Patrimoine: {p2:.2f} €")
+    print(f"  Pourcentage de contribution (par rapport au patrimoine): {pourcentage_cible:.2f}%") # Même pourcentage
+    print(f"  Contribution mensuelle: {c2:.2f} €")
+
+    print("\n--- Récapitulatif ---")
+    print(f"Dépenses totales du compte commun: {d:.2f} €")
+    print(f"Somme des contributions: {c1 + c2:.2f} €")
+    print(f"Pourcentage cible (appliqué aux deux patrimoines): {pourcentage_cible:.2f}%")
+
+# Appel de la fonction
+calculer_contributions_patrimoine_egalitaire()
